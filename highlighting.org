@@ -1,0 +1,25 @@
+* Highlighting
+
+Note: 
+If your config is directly in init.el or .emacs, then copy just the source block at the end. 
+If your emacs config is in org-mode, this entire file (in its text form) can be copied into it and the examples 
+will demonstrate the highlighting in action.
+
+
+1. Citations with the following variants should work:
+   - [@source 45-46]
+   - [-@source 45-46]
+   - [qtd in @source 23-24]
+2. Quotations in LaTeX Style, that is ``quoted matter" will be highlighted ``as so". It is a non-greedy regexp so that /the words between two matches/ in the same line are not highlighted.
+3. Emphasis in italics such as for /Book Titles/ or /terminology/ will be highlighted.
+4. Citations containing page numbers or page ranges in MLA style will be highlighted.
+#+BEGIN_SRC emacs-lisp 
+(add-hook 'org-mode-hook
+      (lambda ()
+       (font-lock-add-keywords nil 
+       '(("\\[.*?@.*\\]" . font-lock-keyword-face)
+         ("``[^\"]+\"" . font-lock-function-name-face)
+         ("/.*?/" . font-lock-function-name-face)
+         ("([0-9\-]*)" . font-lock-keyword-face)
+         ))))
+#+END_SRC
